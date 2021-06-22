@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MiddleAsteroid : Asteroid, IObstacle
 {
-    [SerializeField] GameObject litleAsteroidPrefab;
+    [SerializeField] GameObject littleAsteroidPrefab;
     [SerializeField] float damage;
 
     [SerializeField] float[] anglesForAsteroids;
@@ -21,28 +21,24 @@ public class MiddleAsteroid : Asteroid, IObstacle
             CreateAsteroid(anglesForAsteroids[i]);
         }
 
-        Debug.Log(transform.localRotation.eulerAngles);
-
         Destroy(transform.gameObject);
     }
 
     void CreateAsteroid(float angle)
     {
-        var littleAsteroid = Instantiate(litleAsteroidPrefab);
-        
+        var littleAsteroid = Instantiate(littleAsteroidPrefab);
+
+
         var asteroidTransform = littleAsteroid.transform;
+
+        littleAsteroid.GetComponent<LittleAsteroid>().SetDirection(direction, angle);
+
         asteroidTransform.position = transform.position;
         asteroidTransform.parent = null;
 
-        var newAngles = transform.localEulerAngles;
-        newAngles.z += angle;
-        asteroidTransform.localEulerAngles = newAngles;
+        //var newAngles = transform.localEulerAngles;
+        //newAngles.z += angle;
+        //asteroidTransform.localEulerAngles = newAngles;
     }
 
-    float GetAngle()
-    {
-        var angle = Mathf.Tan(direction.x / direction.y * 180 / Mathf.PI);
-        Debug.Log(angle);
-        return 0;
-    }
 }

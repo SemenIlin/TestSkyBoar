@@ -8,26 +8,20 @@ public class Asteroid : MonoBehaviour
 
     protected Vector3 direction;
     Camera mainCamera;
-
+    private void OnEnable()
+    {
+        direction = new Vector3(Random.Range(0.1f, 1f), Random.Range(0.1f, 1f), 0);
+    }
     private void Start()
     {
         mainCamera = Camera.main;
-        direction = new Vector3(Random.Range(0.1f, 1.0f), Random.Range(0.1f, 1.0f), 0);
-
-        var angle = Mathf.Atan2(direction.y, direction.x) * 180 / Mathf.PI;
-        Debug.Log(angle);
     }
 
     private void Update()
     {
         transform.Translate(direction * (speed * Time.deltaTime));
         MoveInScreenLocation();
-    }
-
-    protected void SetDirection(Vector3 direction)
-    {
-        direction = this.direction;
-    }
+    }    
 
     void MoveInScreenLocation()
     {

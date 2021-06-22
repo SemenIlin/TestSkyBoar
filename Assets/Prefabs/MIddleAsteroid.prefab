@@ -106,10 +106,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf89f237f7f5c24d93bf808c2fc23a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 2
   offsetY: 0.1
   offsetX: 0.1
-  litleAsteroidPrefab: {fileID: 4966260525880855707, guid: ef44e3ef72ff4e543bcf4be3747e7f36,
+  littleAsteroidPrefab: {fileID: 4966260525880855707, guid: ef44e3ef72ff4e543bcf4be3747e7f36,
     type: 3}
   damage: 20
-  anglesForAsteroids: 
+  anglesForAsteroids:
+  - -10
+  - 10

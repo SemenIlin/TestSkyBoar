@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class MiddleAsteroid : Asteroid, IObstacle
+public class BigAsteroid : Asteroid, IObstacle
 {
-    [SerializeField] GameObject littleAsteroidPrefab;
+    [SerializeField] GameObject middleAsteroidPrefab;
     [SerializeField] float damage;
 
     [SerializeField] float[] anglesForAsteroids;
@@ -24,12 +24,11 @@ public class MiddleAsteroid : Asteroid, IObstacle
 
     void CreateAsteroid(float angle)
     {
-        var littleAsteroid = Instantiate(littleAsteroidPrefab);
+        var middleAsteroid = Instantiate(middleAsteroidPrefab);
 
+        var asteroidTransform = middleAsteroid.transform;
 
-        var asteroidTransform = littleAsteroid.transform;
-
-        littleAsteroid.GetComponent<LittleAsteroid>().SetDirection(direction, angle);
+        middleAsteroid.GetComponent<MiddleAsteroid>().SetDirection(direction, angle);
 
         asteroidTransform.position = transform.position;
         asteroidTransform.parent = null;

@@ -7,16 +7,35 @@ public class Shooting : MonoBehaviour
     [SerializeField] Transform shootPoint;
 
     GameObject bullet;
+    bool isStartShoot;
 
     float timerForBullet;
     float currentQuantityShootBullet;
    
     void Update()
-    {
-       // timerForBullet
+    {        
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CreateBullet();
+            if (currentQuantityShootBullet == 0)
+            {
+                isStartShoot = true;
+            }
+
+            if (isStartShoot && currentQuantityShootBullet < quantityBulletInSecond)
+            {
+                CreateBullet();
+            }
+        }
+
+        if (isStartShoot)
+        {
+            timerForBullet += Time.deltaTime;
+            if(timerForBullet >= 1)
+            {
+                timerForBullet = 0;
+                isStartShoot = false;
+                currentQuantityShootBullet = 0;
+            }
         }
     }
     void CreateBullet()

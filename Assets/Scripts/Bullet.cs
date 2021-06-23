@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] float speed;
+
+    Vector3 direction;
     void Start()
     {
-        
+        direction = Vector3.zero;   
     }
 
-    // Update is called once per frame
     void Update()
+    {
+        transform.Translate(direction.normalized * speed);
+    }
+
+    public void SetDirection(Vector3 direction)
+    {
+        this.direction = direction; 
+    }
+
+    private void OnTriggerEnter(Collider other)
     {
         
     }

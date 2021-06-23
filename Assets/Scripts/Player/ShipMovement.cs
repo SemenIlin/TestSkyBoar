@@ -17,6 +17,8 @@ public class ShipMovement : MonoBehaviour
     bool isStopMove;
     Vector3 direction;
 
+    public Vector3 Direction => direction;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -95,6 +97,11 @@ public class ShipMovement : MonoBehaviour
             {
                 newSpeed.x += stepForStop;
                 newSpeed.x = Mathf.Clamp(newSpeed.x, -maxSpeed, 0);
+            }
+
+            if(Vector3.Distance(Vector3.zero, newSpeed) < 0.001f)
+            {
+                direction = Vector3.zero;
             }
         }
 

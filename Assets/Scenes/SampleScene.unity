@@ -570,6 +570,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigAsteroid
       objectReference: {fileID: 0}
+    - target: {fileID: 2000887063999412508, guid: 544dbb9e1c4442f438bbbe5750bca248,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 544dbb9e1c4442f438bbbe5750bca248, type: 3}
 --- !u!1001 &7256363737399350445
@@ -638,6 +643,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ship
+      objectReference: {fileID: 0}
+    - target: {fileID: 7256363738518127397, guid: 47edf13277ed9b14aa682d81234ed274,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47edf13277ed9b14aa682d81234ed274, type: 3}

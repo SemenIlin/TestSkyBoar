@@ -2,7 +2,7 @@
 
 public class Asteroid : MonoBehaviour
 {
-    [Range(0.5f, 5f)] public float speed = 1f;
+    [Range(0.01f, 0.1f)] public float speed = 0.05f;
     [SerializeField, Range(0.01f, 1)] float offsetY = 0.2f;
     [SerializeField, Range(0.01f, 1)] float offsetX = 0.2f;
 
@@ -17,9 +17,9 @@ public class Asteroid : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        transform.Translate(direction * (speed * Time.deltaTime));
+        transform.Translate(direction.normalized * speed);
         MoveInScreenLocation();
     }    
 
@@ -79,11 +79,11 @@ public class Asteroid : MonoBehaviour
             this.direction.y = Mathf.Sqrt(gipotenusa * gipotenusa - this.direction.x * this.direction.x);
         }
 
-        while (this.direction.y >= 1)
-        {
-            this.direction.y /= 2;
-            this.direction.x /= 2;
-        }
+        //while (this.direction.y >= 1)
+        //{
+        //    this.direction.y /= 2;
+        //    this.direction.x /= 2;
+        //}
     }
 
 }

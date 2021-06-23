@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9986ed673de3d364da6aaacf62bb27e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
+  speed: 0.05
   offsetY: 0.12
   offsetX: 0.12
   middleAsteroidPrefab: {fileID: 3096953747373235987, guid: b9c83749f4291b643a340730d12a0477,

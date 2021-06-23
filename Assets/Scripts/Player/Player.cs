@@ -25,5 +25,17 @@ public class Player : MonoBehaviour
             }
             //asteroid.GetBihaviour();
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                var asteroid = hit.transform.GetComponent<IObstacle>();
+                asteroid?.FullDestoy();
+
+            }
+            //asteroid.GetBihaviour();
+        }
     }
 }

@@ -64,10 +64,6 @@ public class ShipMovement : MonoBehaviour
         {
             direction = transform.up;
         }
-        else if (verticalMove < 0)
-        {
-            direction = -transform.up;
-        }
 
         rb.AddForce(direction * acceleration);
     }

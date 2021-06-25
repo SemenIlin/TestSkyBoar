@@ -47,7 +47,7 @@ public class Shooting : MonoBehaviour
 
         var bulletScript = bullet.GetComponent<Bullet>();
 
-        bulletScript.SetDirection(transform.localEulerAngles);
+        bulletScript.Short(transform.localRotation);
     }
 
 

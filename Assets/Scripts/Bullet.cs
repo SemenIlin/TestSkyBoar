@@ -6,37 +6,81 @@ public class Bullet : MonoBehaviour
     [SerializeField] float speed;
 
     Rigidbody rb;
+
     float widthScreen;
     float progressMove;
-    public void SetDirection(Vector3 direction)
+
+    Vector3 currentPosition;
+    Vector3 previousPosition;
+    float progress = 0f;
+    public void Short(Quaternion direction)
     {
-        transform.localEulerAngles = direction;
+        transform.localRotation = direction;
+        OnInit();
     }
 
-    void OnEnable()
+    void OnInit()
     {
+        currentPosition = previousPosition = transform.position;
+
         rb = GetComponent<Rigidbody>();
 
         var startPoint = Camera.main.ViewportToWorldPoint(Vector3.zero).x;
         var endPoint = Camera.main.ViewportToWorldPoint(Vector3.one).x;
-        widthScreen = endPoint - startPoint;
-        Debug.Log("widthScreen " + widthScreen);          
+        widthScreen = endPoint - startPoint;          
     }
 
     void FixedUpdate()
     {
-        //transform.Translate(transform.up * speed);
         rb.AddForce(transform.up * speed, ForceMode.Impulse);
         ToLimitSpeed();
-        bulletMove(Time.fixedDeltaTime);
+        DestroyBullet();
     }
     void ToLimitSpeed()
     {
         var newSpeed = rb.velocity;
-        newSpeed.y = Mathf.Clamp(newSpeed.y, -speed, speed);
-        newSpeed.x = Mathf.Clamp(newSpeed.x, -speed, speed);
-        rb.velocity = newSpeed;
+        var koeff = 0.0f;
+
+        if (Mathf.Abs(rb.velocity.x) >= Mathf.Abs(rb.velocity.y))
+        {
+            if (rb.velocity.y != 0.0f)
+            {
+                koeff = rb.velocity.x / rb.velocity.y;
+            }
+
+            newSpeed.x = Mathf.Clamp(newSpeed.x, -speed, speed);
+            if (koeff != 0)
+            {
+                newSpeed.y = newSpeed.x / koeff;
+            }
+            else
+            {
+                newSpeed.y = Mathf.Clamp(newSpeed.y, -speed, speed);
+            }
+        }
+
+        else
+        {
+            if (rb.velocity.x != 0.0f)
+            {
+                koeff = rb.velocity.y / rb.velocity.x;
+            }
+
+            newSpeed.y = Mathf.Clamp(newSpeed.y, -speed, speed);
+            if (koeff != 0)
+            {
+                newSpeed.x = newSpeed.y / koeff;
+            }
+            else
+            {
+                newSpeed.x = Mathf.Clamp(newSpeed.x, -speed, speed);
+            }
+        }
+
+        rb.velocity = newSpeed; 
     }    
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -54,13 +98,26 @@ public class Bullet : MonoBehaviour
         asteroid?.GetBihaviour();
     }
 
-    void bulletMove(float deltaTime)
+    float CalculateDistanceFlyBullet()
+    {        
+        currentPosition = transform.position;
+        var deltaMove = currentPosition - previousPosition;
+        var step = Vector3.Magnitude(deltaMove);
+
+        if (step < 0.8f) 
+        { 
+            progress += step;
+        }
+        previousPosition = currentPosition;
+
+        return progress;
+    }
+
+    void DestroyBullet()
     {
-        var totalSpeed = Mathf.Sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y * rb.velocity.y);
-        progressMove += totalSpeed * deltaTime;
-        if (widthScreen <= progressMove)
+        if (CalculateDistanceFlyBullet() >= widthScreen)
         {
-            Destroy(transform.gameObject);
+            Destroy(gameObject);
         }
     }
 }

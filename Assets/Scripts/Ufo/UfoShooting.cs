@@ -7,22 +7,15 @@ public class UfoShooting : MonoBehaviour
     [SerializeField] Transform shootPoint;
 
     BulletPool bulletPool;
-    Transform target;
 
     float min;
     float max;
 
     float timer;
     void Start()
-    {
-        var target = FindObjectOfType<ShipMovement>();
-        if (target != null)
-        {
-            this.target = target.transform;
-        }
-
+    {    
         bulletPool = FindObjectOfType<BulletPool>();
-       // Shoot();
+        Shoot();
         timer = GetPeriodBetweenShoot();
     }
 
@@ -31,7 +24,7 @@ public class UfoShooting : MonoBehaviour
         timer -= Time.fixedDeltaTime;
         if (timer <= 0)
         {
-           // Shoot();
+            Shoot();
             timer = GetPeriodBetweenShoot();
         }
     }
@@ -46,10 +39,15 @@ public class UfoShooting : MonoBehaviour
             return;
         }
 
-        var angle = Vector3.Angle(Vector3.up, target.transform.position);
+        var angle = Vector3.Angle(target.transform.position - shootPoint.position, shootPoint.up);
+        if (target.transform.position.x > shootPoint.position.x)
+        {
+            angle = -angle;
+        }
+
 
         Debug.Log("angle " + angle);
-       // bullet.GetComponent<BulletMovement>().Short(new Vector3(0, 0, angle));
+        bullet.GetComponent<Bullet>().Short(new Vector3(0, 0, angle));
     }
 
     float GetPeriodBetweenShoot()

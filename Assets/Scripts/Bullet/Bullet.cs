@@ -16,6 +16,12 @@ public class Bullet : MonoBehaviour
         OnInit();
     }
 
+    public void Short(Vector3 direction)
+    {
+        transform.localEulerAngles = direction;
+        OnInit();
+    }
+
     void OnInit()
     {
         currentPosition = previousPosition = transform.position;
@@ -71,27 +77,7 @@ public class Bullet : MonoBehaviour
         }
 
         rb.velocity = newSpeed;
-    }    
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            return;
-        }
-
-        if (other.CompareTag("UFO"))
-        {
-            Destroy(other.gameObject);
-        }
-
-        if (other.CompareTag("Asteroid"))
-        {
-            var asteroid = other.GetComponent<IObstacle>();
-            asteroid.GetBihaviour();
-            gameObject.SetActive(false);
-        }
-    }
+    }        
 
     float CalculateDistanceFlyBullet()
     {        

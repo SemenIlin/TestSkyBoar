@@ -7,9 +7,6 @@ public class Bullet : MonoBehaviour
 
     Rigidbody rb;
 
-    float widthScreen;
-    float progressMove;
-
     Vector3 currentPosition;
     Vector3 previousPosition;
     float progress = 0f;
@@ -23,11 +20,7 @@ public class Bullet : MonoBehaviour
     {
         currentPosition = previousPosition = transform.position;
 
-        rb = GetComponent<Rigidbody>();
-
-        var startPoint = Camera.main.ViewportToWorldPoint(Vector3.zero).x;
-        var endPoint = Camera.main.ViewportToWorldPoint(Vector3.one).x;
-        widthScreen = endPoint - startPoint;          
+        rb = GetComponent<Rigidbody>();     
     }
 
     void FixedUpdate()
@@ -87,10 +80,11 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        //if (other.CompareTag("Enemy"))
-        //{
-        //    return;
-        //}
+        if (other.CompareTag("UFO"))
+        {
+            Destroy(other.gameObject);
+        }
+
         if (other.CompareTag("Asteroid"))
         {
             var asteroid = other.GetComponent<IObstacle>();
@@ -116,7 +110,7 @@ public class Bullet : MonoBehaviour
 
     void DestroyBullet()
     {
-        if (CalculateDistanceFlyBullet() >= widthScreen)
+        if (CalculateDistanceFlyBullet() >= Screen.WidthScreen)
         {
             gameObject.SetActive(false);
             progress = 0;

@@ -6,10 +6,17 @@ public class Asteroid : MonoBehaviour
     [SerializeField, Range(0.01f, 1)] float offsetY = 0.2f;
     [SerializeField, Range(0.01f, 1)] float offsetX = 0.2f;
 
+    protected AsteroidPool pool;
+
     protected Vector3 direction;
     Camera mainCamera;
     private void OnEnable()
     {
+        if (pool == null)
+        {
+            pool = transform.parent.GetComponent<AsteroidPool>();
+        }
+
         direction = new Vector3(Random.Range(0.1f, 1f), Random.Range(0.1f, 1f), 0);
     }
     private void Start()
@@ -78,12 +85,5 @@ public class Asteroid : MonoBehaviour
             gipotenusa = this.direction.x / Mathf.Cos(angle * Mathf.PI / 180);
             this.direction.y = Mathf.Sqrt(gipotenusa * gipotenusa - this.direction.x * this.direction.x);
         }
-
-        //while (this.direction.y >= 1)
-        //{
-        //    this.direction.y /= 2;
-        //    this.direction.x /= 2;
-        //}
     }
-
 }

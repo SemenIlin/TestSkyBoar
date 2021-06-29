@@ -10,7 +10,7 @@ public class BigAsteroid : Asteroid, IObstacle
 
     public void FullDestoy()
     {
-        Destroy(transform.gameObject);
+        transform.gameObject.SetActive(false);
     }
 
     public void GetBihaviour()
@@ -24,18 +24,19 @@ public class BigAsteroid : Asteroid, IObstacle
             CreateAsteroid(anglesForAsteroids[i]);
         }
 
-        Destroy(transform.gameObject);
+        transform.gameObject.SetActive(false);
     }
 
     void CreateAsteroid(float angle)
     {
-        var middleAsteroid = Instantiate(middleAsteroidPrefab);
+        //var middleAsteroid = Instantiate(middleAsteroidPrefab);
+       var middleAsteroid = pool.MiddleAsteroidsPool.GetFreeElement();
 
-        var asteroidTransform = middleAsteroid.transform;
+       var asteroidTransform = middleAsteroid.transform;
 
-        middleAsteroid.GetComponent<MiddleAsteroid>().SetDirection(direction, angle);
+       middleAsteroid.GetComponent<MiddleAsteroid>().SetDirection(direction, angle);
 
-        asteroidTransform.position = transform.position;
-        asteroidTransform.parent = null;
+       asteroidTransform.position = transform.position;
+       //asteroidTransform.parent = null;
     }
 }

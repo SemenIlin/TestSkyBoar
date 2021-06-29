@@ -80,8 +80,6 @@ public class Bullet : MonoBehaviour
         rb.velocity = newSpeed; 
     }    
 
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -93,9 +91,12 @@ public class Bullet : MonoBehaviour
         //{
         //    return;
         //}
-
-        var asteroid = other.GetComponent<IObstacle>();
-        asteroid?.GetBihaviour();
+        if (other.CompareTag("Asteroid"))
+        {
+            var asteroid = other.GetComponent<IObstacle>();
+            asteroid.GetBihaviour();
+            Destroy(gameObject);
+        }
     }
 
     float CalculateDistanceFlyBullet()

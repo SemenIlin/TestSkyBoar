@@ -54,7 +54,7 @@ public class ShipMovement : MonoBehaviour
         {
             isStopMove = true;
         }
-        else
+        else if(verticalMove > 0)
         {
             isStopMove = false;
         }

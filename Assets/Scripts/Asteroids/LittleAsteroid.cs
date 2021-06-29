@@ -7,11 +7,11 @@ public class LittleAsteroid : Asteroid, IObstacle
 
     public void FullDestoy()
     {
-        Destroy(transform.gameObject);
+        transform.gameObject.SetActive(false);
     }
 
     public void GetBihaviour()
     {
-        Destroy(transform.gameObject);
+        transform.gameObject.SetActive(false);
     }    
 }

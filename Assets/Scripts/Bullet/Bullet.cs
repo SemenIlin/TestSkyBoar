@@ -77,7 +77,7 @@ public class Bullet : MonoBehaviour
             }
         }
 
-        rb.velocity = newSpeed; 
+        rb.velocity = newSpeed;
     }    
 
     private void OnTriggerEnter(Collider other)
@@ -95,7 +95,7 @@ public class Bullet : MonoBehaviour
         {
             var asteroid = other.GetComponent<IObstacle>();
             asteroid.GetBihaviour();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -118,7 +118,8 @@ public class Bullet : MonoBehaviour
     {
         if (CalculateDistanceFlyBullet() >= widthScreen)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            progress = 0;
         }
     }
 }

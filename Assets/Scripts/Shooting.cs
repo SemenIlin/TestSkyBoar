@@ -6,6 +6,8 @@ public class Shooting : MonoBehaviour
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform shootPoint;
 
+    [SerializeField] BulletPool bulletPool;
+
     GameObject bullet;
     bool isStartShoot;
 
@@ -42,13 +44,12 @@ public class Shooting : MonoBehaviour
     {
         ++currentQuantityShootBullet;
 
-        bullet = Instantiate(bulletPrefab);
+        //bullet = Instantiate(bulletPrefab);
+        bullet = bulletPool.PlayerBulletPool.GetFreeElement().gameObject;
         bullet.transform.position = shootPoint.position;
 
         var bulletScript = bullet.GetComponent<Bullet>();
 
         bulletScript.Short(transform.localRotation);
     }
-
-
 }

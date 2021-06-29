@@ -21,7 +21,7 @@ public class AsteroidPool : MonoBehaviour
     PoolMono<MiddleAsteroid> middleAsteroidsPool;
     PoolMono<BigAsteroid> bigAsteroidsPool;
 
-    private void Start()
+    private void Awake()
     {
         littleAsteroidsPool = new PoolMono<LittleAsteroid>(littleAsteroidPrefab, quantityLittleAsteroids, transform);
         middleAsteroidsPool = new PoolMono<MiddleAsteroid>(middleAsteroidPrefab, quantityMiddleAsteroids, transform);

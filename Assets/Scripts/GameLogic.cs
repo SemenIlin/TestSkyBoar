@@ -15,10 +15,6 @@ public class GameLogic : MonoBehaviour
         OnInitAsteroids();
     }
 
-    void Update()
-    {
-        
-    }
 
     void OnInitAsteroids()
     {

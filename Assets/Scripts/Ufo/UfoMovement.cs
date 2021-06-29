@@ -1,47 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UfoMovement : MonoBehaviour
 {
     [SerializeField] float timeOfMovement;
 
-    int direction;
+    UfoSpawner ufoSpawner;
+    Camera mainCamera;
+
     float speedMovement;
-    Vector3 movementDirectoion;
     void Start()
     {
+        mainCamera = Camera.main;
+        ufoSpawner = transform.parent.GetComponent<UfoSpawner>();
         if (timeOfMovement > 0) 
         {
             speedMovement = Screen.WidthScreen / timeOfMovement;
         }
-        SetDirection();
     }
 
     void FixedUpdate()
     {
-        transform.Translate(movementDirectoion * Time.fixedDeltaTime * speedMovement);
+        transform.Translate(ufoSpawner.MovementDirection * Time.fixedDeltaTime * speedMovement);
+        DestroyUfo();
     }
 
-    
-
-    void SetDirection()
+    void DestroyUfo()
     {
-        direction = Random.Range(-1, 1);
-        if (direction == 0)
+        var newPosition = transform.position;
+
+        var point = mainCamera.WorldToViewportPoint(transform.position);                
+        if (point.x > 1f)
         {
-            direction = 1;
+            newPosition.x = mainCamera.ViewportToWorldPoint(new Vector3(0, point.y, point.z)).x;
+            Destroy(gameObject);
         }
-
-
-        switch (direction)
+        if (point.x < 0f)
         {
-            case -1:
-                movementDirectoion = -transform.right;
-                break;
-            case 1:
-                movementDirectoion = transform.right;
-                break;
+            newPosition.x = mainCamera.ViewportToWorldPoint(new Vector3(1, point.y, point.z)).x;
+            Destroy(gameObject);
         }
     }
 }

@@ -3,7 +3,6 @@
 public class Shooting : MonoBehaviour
 {
     [SerializeField] float quantityBulletInSecond = 3;
-    [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform shootPoint;
 
     [SerializeField] BulletPool bulletPool;

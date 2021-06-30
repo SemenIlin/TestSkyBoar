@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameLogic : MonoBehaviour
 {
+    [SerializeField] GameScreen gameScreen;
+    [SerializeField] Score score;
+
     [SerializeField] int startQuantityAsteroids;
     [SerializeField] AsteroidPool asteroidPool;
     [SerializeField] float timeBetweenLoadLevel = 2f;
@@ -14,11 +17,25 @@ public class GameLogic : MonoBehaviour
 
     Transform player;
     void Start()
-    {
+    {        
+        gameScreen.UpdateScoreText(0);
+        gameScreen.UpdateQuantityLifeText(score.QuantityLifes);
+
+
         player = FindObjectOfType<ShipMovement>().transform;
         OnInitAsteroids();
     }
 
+    public void RestartPlayer(Collider other)
+    {     
+        score.DecreaseQuantityLifes();
+        if (score.QuantityLifes == 0)
+        {
+            other.gameObject.SetActive(false);
+        }
+
+        gameScreen.UpdateQuantityLifeText(score.QuantityLifes);
+    }
     public void LoadNextLevel(bool hasObstacles)
     {
         if (!hasObstacles)

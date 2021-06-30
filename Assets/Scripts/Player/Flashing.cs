@@ -12,12 +12,16 @@ public class Flashing : MonoBehaviour
     float time;
     float timerForInviseble;
 
-
+    bool isEndFlashing;
     MeshRenderer meshRenderer;
+    BoxCollider boxCollider;
 
     [SerializeField] List<MeshRenderer> meshRenderers = new List<MeshRenderer>();
     void Start()
     {
+        boxCollider = GetComponent<BoxCollider>();
+        boxCollider.enabled = false;
+
         timeBetweenFlashing = 1f / quantityFlashRatePerSecond;
         meshRenderer = GetComponent<MeshRenderer>();
         meshRenderers.Add(meshRenderer);
@@ -28,6 +32,12 @@ public class Flashing : MonoBehaviour
         timerForInvulnerability += deltaTime;
         if (timerForInvulnerability >= timeInvulnerability)
         {
+            if (!isEndFlashing)
+            {
+                isEndFlashing = true;
+                boxCollider.enabled = true;
+                meshRenderers.ForEach(mr => mr.enabled = true);
+            }
             return;
         }
 
@@ -45,11 +55,16 @@ public class Flashing : MonoBehaviour
         }
     }
 
+    public void DisableCollider()
+    {
+        boxCollider.enabled = false;
+    }
+
     public void ResetTimers()
     {
         timerForInvulnerability = 0;
-        timeBetweenFlashing = 0;
         time = 0;
         timerForInviseble = 0;
+        isEndFlashing = false;
     }   
 }        

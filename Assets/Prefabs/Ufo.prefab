@@ -157,8 +157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85311bcf7fca30940ac8accacfeaa9fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  periodBetweenShootsMinValue: 1
-  periodBetweenShootsMaxValue: 2
+  periodBetweenShootsMinValue: 2
+  periodBetweenShootsMaxValue: 5
   shootPoint: {fileID: 7990443087329980812}
 --- !u!54 &5328042568119521070
 Rigidbody:

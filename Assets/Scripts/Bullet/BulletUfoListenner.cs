@@ -7,7 +7,13 @@ public class BulletUfoListenner : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             gameObject.SetActive(false);
-            other.gameObject.SetActive(false);
+
+            var flashing = other.GetComponent<Flashing>();
+            flashing.DisableCollider();
+            flashing.ResetTimers();
+
+            var gameLogic = FindObjectOfType<GameLogic>();
+            gameLogic.RestartPlayer(other);
         }
     }
 }

@@ -16,17 +16,20 @@ public class ShipMovement : MonoBehaviour
     Rigidbody rb;
     bool isStopMove;
     Vector3 direction;
+    Flashing flashing;
 
     public Vector3 Direction => direction;
 
     void Start()
     {
+        flashing = GetComponent<Flashing>();
         rb = GetComponent<Rigidbody>();
         direction = Vector3.zero;
     }
 
     void Update()
     {
+        flashing.ToBlink(Time.deltaTime);
         horizontalRotate = Input.GetAxis("Horizontal");
         verticalMove = Input.GetAxis("Vertical");
 

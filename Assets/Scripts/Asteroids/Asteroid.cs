@@ -9,6 +9,7 @@ public class Asteroid : MonoBehaviour
     protected AsteroidPool pool;
 
     protected Vector3 direction;
+         
     Camera mainCamera;
     private void OnEnable()
     {
@@ -44,10 +45,15 @@ public class Asteroid : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            other.gameObject.SetActive(false);
+            var flashing = other.GetComponent<Flashing>();
+            flashing.DisableCollider();
+            flashing.ResetTimers();
+
             FullDestoy();
             var gameLogic = FindObjectOfType<GameLogic>();
             gameLogic.LoadNextLevel(HasAsteroidsOnLocation());
+
+            gameLogic.RestartPlayer(other);
         }
     }
 

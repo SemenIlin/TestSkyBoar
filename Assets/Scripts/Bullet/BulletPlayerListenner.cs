@@ -2,16 +2,18 @@ using UnityEngine;
 
 public class BulletPlayerListenner : MonoBehaviour
 {
+    GameScreen gameScreen;
+    private void Start()
+    {
+        gameScreen = FindObjectOfType<GameScreen>();
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            return;
-        }
-
         if (other.CompareTag("UFO"))
         {
-            other.GetComponent<IObstacle>().GetBihaviour();
+            var ufo = other.GetComponent<IObstacle>();
+            ufo.GetBihaviour();
+            UpdateScore(ufo.Reward);
         }
 
         if (other.CompareTag("Asteroid"))
@@ -21,7 +23,18 @@ public class BulletPlayerListenner : MonoBehaviour
             gameObject.SetActive(false);
 
             var gameLogic = FindObjectOfType<GameLogic>();
-            gameLogic.LoadNextLevel(other.GetComponent<Asteroid>().HasAsteroidsOnLocation());            
+            gameLogic.LoadNextLevel(other.GetComponent<Asteroid>().HasAsteroidsOnLocation());
+
+            UpdateScore(asteroid.Reward);
         }
     }
+
+    void UpdateScore(float reward)
+    {
+        var score = FindObjectOfType<Score>();
+        score.AddPoints(reward);
+
+        gameScreen.UpdateScoreText(score.Points);
+    }
+
 }

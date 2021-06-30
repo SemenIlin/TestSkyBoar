@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 7256363738518127394}
   - component: {fileID: 6053407601560141133}
   - component: {fileID: 7308011373390432295}
+  - component: {fileID: 2337765290745693525}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Player
@@ -88,10 +89,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -116,6 +119,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &7256363738518127396
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -157,9 +161,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b47757a55c15d40b1a4aa7850d4ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
+  maxSpeed: 3
   maxRotateSpeed: 1.5
-  acceleration: 5
+  acceleration: 3
   stepForStop: 0.4
 --- !u!114 &7256363738518127394
 MonoBehaviour:
@@ -189,7 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quantityFlashRatePerSecond: 2
   timeInvulnerability: 3
-  timeInIviseble: 0.2
+  timeInIviseble: 0.3
   meshRenderers:
   - {fileID: 7256363738764547595}
 --- !u!114 &7308011373390432295
@@ -204,9 +208,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62dce16ac59cc614098810fa3b833ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 8157354157094277410, guid: 5793339429f82e6478052b47acc46c73,
-    type: 3}
+  quantityBulletInSecond: 3
   shootPoint: {fileID: 8575671893089736841}
+  bulletPool: {fileID: 0}
+--- !u!114 &2337765290745693525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7256363738518127397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb07224f9c82b5b47b0138e336786516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7256363738764547598
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,10 +276,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -288,6 +306,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &7256363738764547592
 BoxCollider:
   m_ObjectHideFlags: 0

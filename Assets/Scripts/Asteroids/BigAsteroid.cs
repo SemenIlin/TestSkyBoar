@@ -33,5 +33,5 @@ public class BigAsteroid : Asteroid, IObstacle
 
        asteroidTransform.position = transform.position;
        //asteroidTransform.parent = null;
-    }
+    }    
 }

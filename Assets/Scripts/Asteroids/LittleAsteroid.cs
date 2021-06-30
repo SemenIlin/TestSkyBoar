@@ -2,8 +2,8 @@
 
 public class LittleAsteroid : Asteroid, IObstacle
 {
-    [SerializeField] float damage;
-    public float ToDamage => damage;
+    [SerializeField] float reward;
+    public float Reward => reward;
 
     public void FullDestoy()
     {

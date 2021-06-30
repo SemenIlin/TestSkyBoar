@@ -3,10 +3,10 @@
 public class MiddleAsteroid : Asteroid, IObstacle
 {
     [SerializeField] GameObject littleAsteroidPrefab;
-    [SerializeField] float damage;
+    [SerializeField] float reward;
 
     [SerializeField] float[] anglesForAsteroids;
-    public float ToDamage => damage;
+    public float Reward => reward;
 
     public void FullDestoy()
     {

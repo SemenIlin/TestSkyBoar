@@ -2,5 +2,5 @@
 {
     void GetBihaviour();
 
-    float ToDamage { get; }
+    float Reward { get; }
 }

@@ -1,13 +1,17 @@
 using UnityEngine;
 
-public class UfoMovement : MonoBehaviour
+public class UfoMovement : MonoBehaviour, IObstacle
 {
     [SerializeField] float timeOfMovement;
+    [SerializeField] float reward;
 
     UfoSpawner ufoSpawner;
     Camera mainCamera;
 
     float speedMovement;
+
+    public float Reward => reward;
+
     void Start()
     {
         mainCamera = Camera.main;
@@ -39,5 +43,10 @@ public class UfoMovement : MonoBehaviour
             newPosition.x = mainCamera.ViewportToWorldPoint(new Vector3(1, point.y, point.z)).x;
             Destroy(gameObject);
         }
+    }
+
+    public void GetBihaviour()
+    {
+        Destroy(gameObject);
     }
 }

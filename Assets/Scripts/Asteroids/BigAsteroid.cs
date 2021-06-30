@@ -3,10 +3,10 @@
 public class BigAsteroid : Asteroid, IObstacle
 {
     [SerializeField] GameObject middleAsteroidPrefab;
-    [SerializeField] float damage;
+    [SerializeField] float reward;
 
     [SerializeField] float[] anglesForAsteroids;
-    public float ToDamage => damage;
+    public float Reward => reward;
 
     public void GetBihaviour()
     {

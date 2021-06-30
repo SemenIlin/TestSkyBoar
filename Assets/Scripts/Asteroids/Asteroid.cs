@@ -34,7 +34,7 @@ public class Asteroid : MonoBehaviour
     {
         if(other.CompareTag("UFO"))
         {
-            Destroy(other.gameObject);
+            other.GetComponent<IObstacle>().GetBihaviour();
             FullDestoy();
             var gameLogic = FindObjectOfType<GameLogic>();
             gameLogic.LoadNextLevel(HasAsteroidsOnLocation());

@@ -11,7 +11,7 @@ public class BulletPlayerListenner : MonoBehaviour
 
         if (other.CompareTag("UFO"))
         {
-            Destroy(other.gameObject);
+            other.GetComponent<IObstacle>().GetBihaviour();
         }
 
         if (other.CompareTag("Asteroid"))

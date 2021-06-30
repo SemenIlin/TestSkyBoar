@@ -10,6 +10,11 @@ public class Bullet : MonoBehaviour
     Vector3 currentPosition;
     Vector3 previousPosition;
     float progress = 0f;
+
+    private void OnEnable()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
     public void Short(Quaternion direction)
     {
         transform.localRotation = direction;
@@ -25,8 +30,6 @@ public class Bullet : MonoBehaviour
     void OnInit()
     {
         currentPosition = previousPosition = transform.position;
-
-        rb = GetComponent<Rigidbody>();     
     }
 
     void FixedUpdate()

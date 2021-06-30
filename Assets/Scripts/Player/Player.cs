@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 var asteroid = hit.transform.GetComponent<IObstacle>();
-                asteroid?.FullDestoy();
+                //asteroid?.FullDestoy();
 
             }
             //asteroid.GetBihaviour();

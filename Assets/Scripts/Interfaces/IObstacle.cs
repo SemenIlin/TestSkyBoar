@@ -2,6 +2,5 @@
 {
     void GetBihaviour();
 
-    void FullDestoy();
     float ToDamage { get; }
 }

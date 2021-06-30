@@ -8,11 +8,6 @@ public class BigAsteroid : Asteroid, IObstacle
     [SerializeField] float[] anglesForAsteroids;
     public float ToDamage => damage;
 
-    public void FullDestoy()
-    {
-        transform.gameObject.SetActive(false);
-    }
-
     public void GetBihaviour()
     {
         if (anglesForAsteroids == null)

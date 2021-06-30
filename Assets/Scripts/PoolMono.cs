@@ -27,28 +27,22 @@ public class PoolMono<T> where T : MonoBehaviour
         CreatePool(count);
     }
 
-    private void CreatePool(int count)
+    public bool HasActiveElement()
     {
-        this.pool = new List<T>();
-
-        for(int i = 0; i < count; ++i)
+        foreach (var mono in pool)
         {
-            this.CreateObject();
+            if (mono.gameObject.activeInHierarchy)
+            {                
+                return true;
+            }
         }
-    }
 
-    private T CreateObject(bool isActiveByDefault = false)
-    {
-        var createObject = Object.Instantiate(this.prefab, this.container);
-        createObject.gameObject.SetActive(isActiveByDefault);
-        this.pool.Add(createObject);
-
-        return createObject;
+        return false;
     }
 
     public bool HasFreeElement(out T element)
     {
-        foreach(var mono in pool)
+        foreach (var mono in pool)
         {
             if (!mono.gameObject.activeInHierarchy)
             {
@@ -75,5 +69,24 @@ public class PoolMono<T> where T : MonoBehaviour
         }
 
         throw new System.Exception($"There is no free element in pool of type {typeof(T)}");
+    }
+
+    private void CreatePool(int count)
+    {
+        this.pool = new List<T>();
+
+        for(int i = 0; i < count; ++i)
+        {
+            this.CreateObject();
+        }
+    }
+
+    private T CreateObject(bool isActiveByDefault = false)
+    {
+        var createObject = Object.Instantiate(this.prefab, this.container);
+        createObject.gameObject.SetActive(isActiveByDefault);
+        this.pool.Add(createObject);
+
+        return createObject;
     }
 }

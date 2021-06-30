@@ -28,7 +28,45 @@ public class Asteroid : MonoBehaviour
     {
         transform.Translate(direction.normalized * speed);
         MoveInScreenLocation();
-    }    
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("UFO"))
+        {
+            Destroy(other.gameObject);
+            FullDestoy();
+            var gameLogic = FindObjectOfType<GameLogic>();
+            gameLogic.LoadNextLevel(HasAsteroidsOnLocation());
+
+            return;
+        }
+
+        if (other.CompareTag("Player"))
+        {
+            other.gameObject.SetActive(false);
+            FullDestoy();
+            var gameLogic = FindObjectOfType<GameLogic>();
+            gameLogic.LoadNextLevel(HasAsteroidsOnLocation());
+        }
+    }
+
+    void FullDestoy()
+    {
+        transform.gameObject.SetActive(false);
+    }
+
+    public bool HasAsteroidsOnLocation()
+    {
+        if (!pool.BigAsteroidsPool.HasActiveElement() &&
+            !pool.MiddleAsteroidsPool.HasActiveElement() &&
+            !pool.LittleAsteroidsPool.HasActiveElement())
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     void MoveInScreenLocation()
     {

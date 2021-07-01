@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class GameLogic : MonoBehaviour
 {
-    [SerializeField] GameScreen gameScreen;
-    [SerializeField] Score score;
+    [SerializeField] MenuScreen menuScreen;
 
     [SerializeField] int startQuantityAsteroids;
     [SerializeField] AsteroidPool asteroidPool;
@@ -16,26 +14,32 @@ public class GameLogic : MonoBehaviour
 
 
     Transform player;
+    
     void Start()
     {        
-        gameScreen.UpdateScoreText(0);
-        gameScreen.UpdateQuantityLifeText(score.QuantityLifes);
-
-
         player = FindObjectOfType<ShipMovement>().transform;
         OnInitAsteroids();
     }
 
-    public void RestartPlayer(Collider other)
-    {     
-        score.DecreaseQuantityLifes();
-        if (score.QuantityLifes == 0)
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            other.gameObject.SetActive(false);
+            menuScreen.Pause();
+        }
+    }
+    public void RestartPlayer(Collider other)
+    {
+        menuScreen.Score.DecreaseQuantityLifes();
+        if (menuScreen.Score.QuantityLifes == 0)
+        {
+            GameSettings.Instance.SetIsGameOver(true);
+            menuScreen.Restart();
         }
 
-        gameScreen.UpdateQuantityLifeText(score.QuantityLifes);
+        menuScreen.GameScreen.UpdateQuantityLifeText(menuScreen.Score.QuantityLifes);
     }
+
     public void LoadNextLevel(bool hasObstacles)
     {
         if (!hasObstacles)
@@ -69,26 +73,27 @@ public class GameLogic : MonoBehaviour
         var newPosition = Vector3.zero;
         switch (numberAsteroid){
             case 0:
-                newPosition.x = UnityEngine.Random.Range(player.position.x - minDistancefromShip, player.position.x - maxDistancefromShip);
-                newPosition.y = UnityEngine.Random.Range(player.position.y - minDistancefromShip, player.position.y - maxDistancefromShip);
+                newPosition.x = Random.Range(player.position.x - minDistancefromShip, player.position.x - maxDistancefromShip);
+                newPosition.y = Random.Range(player.position.y - minDistancefromShip, player.position.y - maxDistancefromShip);
                 break;
 
             case 1:
-                newPosition.x = UnityEngine.Random.Range(player.position.x - minDistancefromShip, player.position.x - maxDistancefromShip);
-                newPosition.y = UnityEngine.Random.Range(player.position.y + minDistancefromShip, player.position.y + maxDistancefromShip);
+                newPosition.x = Random.Range(player.position.x - minDistancefromShip, player.position.x - maxDistancefromShip);
+                newPosition.y = Random.Range(player.position.y + minDistancefromShip, player.position.y + maxDistancefromShip);
                 break;
 
             case 2:
-                newPosition.x = UnityEngine.Random.Range(player.position.x + minDistancefromShip, player.position.x + maxDistancefromShip);
-                newPosition.y = UnityEngine.Random.Range(player.position.y + minDistancefromShip, player.position.y + maxDistancefromShip);
+                newPosition.x = Random.Range(player.position.x + minDistancefromShip, player.position.x + maxDistancefromShip);
+                newPosition.y = Random.Range(player.position.y + minDistancefromShip, player.position.y + maxDistancefromShip);
                 break;
 
             case 3:
-                newPosition.x = UnityEngine.Random.Range(player.position.x + minDistancefromShip, player.position.x + maxDistancefromShip);
-                newPosition.y = UnityEngine.Random.Range(player.position.y - minDistancefromShip, player.position.y - maxDistancefromShip);
+                newPosition.x = Random.Range(player.position.x + minDistancefromShip, player.position.x + maxDistancefromShip);
+                newPosition.y = Random.Range(player.position.y - minDistancefromShip, player.position.y - maxDistancefromShip);
                 break;
         }
 
         return newPosition;
     }
+
 }

@@ -18,10 +18,13 @@ public class ShipMovement : MonoBehaviour
     Vector3 direction;
     Flashing flashing;
 
+    Camera myCamera;
+
     public Vector3 Direction => direction;
 
     void Start()
     {
+        myCamera = Camera.main;
         flashing = GetComponent<Flashing>();
         rb = GetComponent<Rigidbody>();
         direction = Vector3.zero;
@@ -34,7 +37,14 @@ public class ShipMovement : MonoBehaviour
         verticalMove = Input.GetAxis("Vertical");
 
         MoveShip(verticalMove);
-        ChangeRotate(horizontalRotate);
+        if (GameSettings.Instance.ControlType == ControlType.Keyboard)
+        {
+            ChangeRotate(horizontalRotate);
+        }
+        else if (GameSettings.Instance.ControlType == ControlType.KeyboardWithMouse)
+        {
+            ShipWithMouseRotate(Time.deltaTime);
+        }
     }
 
     void FixedUpdate()
@@ -120,5 +130,12 @@ public class ShipMovement : MonoBehaviour
         }
 
         transform.localEulerAngles = newRotate;
+    }
+
+    void ShipWithMouseRotate(float time)
+    {
+        var difference = myCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        float rotateZ = Mathf.Atan2(difference.x, difference.y) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, -rotateZ), time * maxRotateSpeed);       
     }
 }

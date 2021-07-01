@@ -6,8 +6,7 @@ public class ShipTriggerListenner : MonoBehaviour
     {
         if (other.CompareTag("UFO"))
         {
-            var gameLogic = FindObjectOfType<GameLogic>();
-            gameLogic.RestartPlayer(GetComponent<Collider>());
+            FindObjectOfType<GameLogic>().RestartPlayer(GetComponent<Collider>());
 
             var flashing = GetComponent<Flashing>();
             flashing.DisableCollider();

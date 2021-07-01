@@ -14,24 +14,51 @@ public class Shooting : MonoBehaviour
     float currentQuantityShootBullet;
    
     void Update()
-    {        
-        if (Input.GetKeyDown(KeyCode.Space))
+    {
+        if (GameSettings.Instance.ControlType == ControlType.Keyboard)
         {
-            if (currentQuantityShootBullet == 0)
-            {
-                isStartShoot = true;
-            }
-
-            if (isStartShoot && currentQuantityShootBullet < quantityBulletInSecond)
-            {
-                CreateBullet();
-            }
+            ShootKeySpace();
         }
 
+        if (GameSettings.Instance.ControlType == ControlType.KeyboardWithMouse)
+        {
+            ShootKeySpace();
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                Shoot();
+            }
+        }
+    }
+
+    void Shoot()
+    {
+        if (currentQuantityShootBullet == 0)
+        {
+            isStartShoot = true;
+        }
+
+        if (isStartShoot && currentQuantityShootBullet < quantityBulletInSecond)
+        {
+            CreateBullet();
+        }
+    }
+    void ShootKeySpace()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Shoot();
+        }
+
+        OnLimitForShootBullet();
+    }
+
+    void OnLimitForShootBullet()
+    {
         if (isStartShoot)
         {
             timerForBullet += Time.deltaTime;
-            if(timerForBullet >= 1)
+            if (timerForBullet >= 1)
             {
                 timerForBullet = 0;
                 isStartShoot = false;

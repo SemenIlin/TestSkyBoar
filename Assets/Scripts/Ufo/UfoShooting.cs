@@ -45,7 +45,6 @@ public class UfoShooting : MonoBehaviour
             angle = -angle;
         }
 
-        Debug.Log("angle " + angle);
         bullet.GetComponent<Bullet>().Short(new Vector3(0, 0, angle));
     }
 

@@ -12,13 +12,15 @@ public class GameLogic : MonoBehaviour
     [SerializeField] float minDistancefromShip = 2f;
     [SerializeField] float maxDistancefromShip = 7f;
 
-
+    int quantityAsteroids;
     Transform player;
     
     void Start()
-    {        
+    {
+        quantityAsteroids = startQuantityAsteroids;
+
+        menuScreen.GenerateAsteroidEvent += OnInitAsteroids;
         player = FindObjectOfType<ShipMovement>().transform;
-        OnInitAsteroids();
     }
 
     private void Update()
@@ -26,7 +28,7 @@ public class GameLogic : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             menuScreen.Pause();
-        }
+        }        
     }
     public void RestartPlayer(Collider other)
     {
@@ -35,9 +37,25 @@ public class GameLogic : MonoBehaviour
         {
             GameSettings.Instance.SetIsGameOver(true);
             menuScreen.Restart();
+            ClearScreen();
         }
 
         menuScreen.GameScreen.UpdateQuantityLifeText(menuScreen.Score.QuantityLifes);
+    }
+
+    void ClearScreen()
+    {
+        asteroidPool.BigAsteroidsPool.SetAllDisactive();
+        asteroidPool.MiddleAsteroidsPool.SetAllDisactive();
+        asteroidPool.LittleAsteroidsPool.SetAllDisactive();
+
+        var ufo = FindObjectOfType<UfoMovement>();
+        if(ufo != null)
+        {
+            Destroy(ufo.gameObject);
+        }
+
+        startQuantityAsteroids = quantityAsteroids;
     }
 
     public void LoadNextLevel(bool hasObstacles)
@@ -47,7 +65,6 @@ public class GameLogic : MonoBehaviour
             StartCoroutine(GetNextLevel());
         }
     }
-
 
     void OnInitAsteroids()
     {
@@ -95,5 +112,4 @@ public class GameLogic : MonoBehaviour
 
         return newPosition;
     }
-
 }

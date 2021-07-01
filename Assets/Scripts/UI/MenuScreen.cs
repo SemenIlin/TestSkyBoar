@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class MenuScreen : MonoBehaviour
     bool isStartGame;
     bool isChange;
 
+    public event Action GenerateAsteroidEvent;
+
     private void Start()
     {
         GameSettings.Instance.SetControlType(ControlType.Keyboard);
@@ -27,8 +30,6 @@ public class MenuScreen : MonoBehaviour
     public void Restart()
     {
         ShowScreen();
-        score.ResetQuantityLife();
-        gameScreen.UpdateScoreText(0);
         GameSettings.Instance.SetControlType(ControlType.Keyboard);
         Time.timeScale = 0;
         ContinueButton.interactable = false;
@@ -41,11 +42,16 @@ public class MenuScreen : MonoBehaviour
 
     public void NewGame()
     {
+        score.ResetQuantityLife();
+        score.ResetPoints();
+        
         GameSettings.Instance.SetIsGameOver(false);
         HideScreen();
         Time.timeScale = 1;
 
         ResetUIText();
+
+        GenerateAsteroidEvent?.Invoke();
 
         if (!isStartGame)
         {

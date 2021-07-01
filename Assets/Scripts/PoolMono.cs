@@ -89,4 +89,15 @@ public class PoolMono<T> where T : MonoBehaviour
 
         return createObject;
     }
+
+    public void SetAllDisactive()
+    {
+        foreach (var mono in pool)
+        {
+            if (mono.gameObject.activeInHierarchy)
+            {
+                mono.gameObject.SetActive(false);
+            }
+        }
+    }
 }

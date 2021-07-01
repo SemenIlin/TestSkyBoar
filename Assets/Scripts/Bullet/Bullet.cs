@@ -85,8 +85,7 @@ public class Bullet : MonoBehaviour
     float CalculateDistanceFlyBullet()
     {        
         currentPosition = transform.position;
-        var deltaMove = currentPosition - previousPosition;
-        var step = Vector3.Magnitude(deltaMove);
+        var step = Vector3.Distance(currentPosition, previousPosition);
 
         if (step < 0.8f) 
         { 

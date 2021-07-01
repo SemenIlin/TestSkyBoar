@@ -25,7 +25,7 @@ public class UfoMovement : MonoBehaviour, IObstacle
     void FixedUpdate()
     {
         transform.Translate(ufoSpawner.MovementDirection * Time.fixedDeltaTime * speedMovement);
-        DestroyUfo();
+        DestroyUfo();       
     }
 
     void DestroyUfo()

@@ -28,4 +28,9 @@ public class Score : MonoBehaviour
     {
         points += reward;
     }
+
+    public void ResetPoints()
+    {
+        points = 0;
+    }
 }

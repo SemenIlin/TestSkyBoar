@@ -14,6 +14,7 @@ public class BulletPlayerListenner : MonoBehaviour
             var ufo = other.GetComponent<IObstacle>();
             ufo.GetBihaviour();
             UpdateScore(ufo.Reward);
+            gameObject.SetActive(false);
         }
 
         if (other.CompareTag("Asteroid"))

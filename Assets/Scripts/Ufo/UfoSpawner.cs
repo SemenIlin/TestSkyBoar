@@ -29,6 +29,11 @@ public class UfoSpawner : MonoBehaviour
             CreateUfo();
         }        
     }
+
+    public void ResetTimer()
+    {
+        timer = 0;
+    }
     public Vector3 MovementDirection => movementDirectoion;
 
     public float Direction => direction;

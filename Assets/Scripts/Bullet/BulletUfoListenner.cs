@@ -12,7 +12,7 @@ public class BulletUfoListenner : MonoBehaviour
             flashing.DisableCollider();
             flashing.ResetTimers();
 
-            FindObjectOfType<GameLogic>().RestartPlayer(other);
+            FindObjectOfType<GameLogic>().RestartPlayer();
         }
     }
 }

@@ -155,8 +155,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuScreen: {fileID: 1939143947}
+  ufoSpawner: {fileID: 1459237714}
   startQuantityAsteroids: 2
   asteroidPool: {fileID: 1045191948}
+  bulletPool: {fileID: 1549972403}
   timeBetweenLoadLevel: 2
   minDistancefromShip: 1
   maxDistancefromShip: 4
@@ -2019,7 +2021,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ufoPrefab: {fileID: 5505609009623253830, guid: 134aea5fb94b1494f92b48da5358235f,
     type: 3}
-  timeForSpawn: 8
+  timeForSpawnMin: 20
+  timeForSpawnMax: 40
   minOffsetYSpawn: 0.2
   maxOffsetYSpawn: 0.8
 --- !u!1 &1549972402

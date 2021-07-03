@@ -53,7 +53,7 @@ public class Asteroid : MonoBehaviour
             var gameLogic = FindObjectOfType<GameLogic>();
             gameLogic.LoadNextLevel(HasAsteroidsOnLocation());
 
-            FindObjectOfType<GameLogic>().RestartPlayer(other);
+            FindObjectOfType<GameLogic>().RestartPlayer();
         }
     }
 

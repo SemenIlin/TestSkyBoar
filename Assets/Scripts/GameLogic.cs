@@ -4,9 +4,11 @@ using UnityEngine;
 public class GameLogic : MonoBehaviour
 {
     [SerializeField] MenuScreen menuScreen;
+    [SerializeField] UfoSpawner ufoSpawner;
 
     [SerializeField] int startQuantityAsteroids;
     [SerializeField] AsteroidPool asteroidPool;
+    [SerializeField] BulletPool bulletPool;
     [SerializeField] float timeBetweenLoadLevel = 2f;
 
     [SerializeField] float minDistancefromShip = 2f;
@@ -14,13 +16,17 @@ public class GameLogic : MonoBehaviour
 
     int quantityAsteroids;
     Transform player;
+    Vector3 startPosition;
+
     
     void Start()
     {
         quantityAsteroids = startQuantityAsteroids;
 
         menuScreen.GenerateAsteroidEvent += OnInitAsteroids;
+        menuScreen.ClearScreenEvent += ClearScreen;
         player = FindObjectOfType<ShipMovement>().transform;
+        startPosition = player.position;
     }
 
     private void Update()
@@ -30,7 +36,7 @@ public class GameLogic : MonoBehaviour
             menuScreen.Pause();
         }        
     }
-    public void RestartPlayer(Collider other)
+    public void RestartPlayer()
     {
         menuScreen.Score.DecreaseQuantityLifes();
         if (menuScreen.Score.QuantityLifes == 0)
@@ -49,6 +55,11 @@ public class GameLogic : MonoBehaviour
         asteroidPool.MiddleAsteroidsPool.SetAllDisactive();
         asteroidPool.LittleAsteroidsPool.SetAllDisactive();
 
+        bulletPool.UFOBulletPool.SetAllDisactive();
+        bulletPool.PlayerBulletPool.SetAllDisactive();
+
+        ufoSpawner.ResetTimer();
+
         var ufo = FindObjectOfType<UfoMovement>();
         if(ufo != null)
         {
@@ -56,6 +67,7 @@ public class GameLogic : MonoBehaviour
         }
 
         startQuantityAsteroids = quantityAsteroids;
+        player.position = startPosition;
     }
 
     public void LoadNextLevel(bool hasObstacles)

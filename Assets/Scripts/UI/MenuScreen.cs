@@ -12,16 +12,24 @@ public class MenuScreen : MonoBehaviour
     [SerializeField] GameScreen gameScreen;
     [SerializeField] Score score;
 
-    bool isStartGame;
     bool isChange;
 
     public event Action GenerateAsteroidEvent;
+    public event Action ClearScreenEvent;
 
     private void Start()
     {
         GameSettings.Instance.SetControlType(ControlType.Keyboard);
         Time.timeScale = 0;
         ContinueButton.interactable = false;
+    }
+
+    private void Update()
+    {
+        if (!ContinueButton.interactable)
+        {
+            ShowScreen();
+        }
     }
 
     public GameScreen GameScreen => gameScreen;
@@ -44,7 +52,7 @@ public class MenuScreen : MonoBehaviour
     {
         score.ResetQuantityLife();
         score.ResetPoints();
-        
+        ClearScreenEvent?.Invoke();
         GameSettings.Instance.SetIsGameOver(false);
         HideScreen();
         Time.timeScale = 1;
@@ -53,11 +61,8 @@ public class MenuScreen : MonoBehaviour
 
         GenerateAsteroidEvent?.Invoke();
 
-        if (!isStartGame)
-        {
-            isStartGame = true;
-            ContinueButton.interactable = isStartGame;
-        }
+        ContinueButton.interactable = true;
+        
     }
 
     public void ChangeControl()

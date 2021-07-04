@@ -18,7 +18,8 @@ public class GameLogic : MonoBehaviour
     Transform player;
     Vector3 startPosition;
 
-    
+    float timer;
+    bool hasObstacles;
     void Start()
     {
         quantityAsteroids = startQuantityAsteroids;
@@ -34,14 +35,30 @@ public class GameLogic : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             menuScreen.Pause();
-        }        
+        }     
+        
+        if (!GameSettings.Instance.IsGameOver)
+        {
+            if (!hasObstacles)
+            {
+                timer += Time.deltaTime;
+                if(timer > timeBetweenLoadLevel)
+                {
+                    GetNextLevel();
+                    hasObstacles = true;
+                }
+            }
+        }
     }
+
+
     public void RestartPlayer()
     {
         menuScreen.Score.DecreaseQuantityLifes();
         if (menuScreen.Score.QuantityLifes == 0)
         {
             GameSettings.Instance.SetIsGameOver(true);
+            timer = 0;
             menuScreen.Restart();
             ClearScreen();
         }
@@ -72,10 +89,11 @@ public class GameLogic : MonoBehaviour
 
     public void LoadNextLevel(bool hasObstacles)
     {
-        if (!hasObstacles)
-        {
-            StartCoroutine(GetNextLevel());
-        }
+        this.hasObstacles = hasObstacles;
+        //if (!hasObstacles)
+        //{
+        //    StartCoroutine(GetNextLevel());
+        //}
     }
 
     void OnInitAsteroids()
@@ -88,12 +106,10 @@ public class GameLogic : MonoBehaviour
     }
 
 
-    IEnumerator GetNextLevel()
-    {
-        yield return new WaitForSeconds(timeBetweenLoadLevel);
-
+    void GetNextLevel()
+    {        
         ++startQuantityAsteroids;
-        OnInitAsteroids();
+        OnInitAsteroids();        
     }
     Vector3 GeneratePosition(int numberAsteroid)
     {

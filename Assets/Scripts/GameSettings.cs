@@ -3,7 +3,7 @@ using UnityEngine;
 public class GameSettings : MonoBehaviour
 {
     ControlType controlType;
-    bool isGameOver;
+    bool isGameOver = true;
     public static GameSettings Instance { get; private set; }
 
     private void Awake()

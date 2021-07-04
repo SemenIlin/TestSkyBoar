@@ -87,7 +87,7 @@ public class GameLogic : MonoBehaviour
 
     void ShowPlayer()
     {
-        transform.gameObject.SetActive(true);
+        player.gameObject.SetActive(true);
     }
 
     void OnInitAsteroids()

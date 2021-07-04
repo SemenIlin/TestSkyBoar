@@ -48,7 +48,6 @@ public class Bullet : MonoBehaviour
     {        
         currentPosition = transform.position;
         var step = Vector3.Distance(currentPosition, previousPosition);
-        Debug.Log(step);
         if (step < 0.8f) 
         { 
             progress += step;

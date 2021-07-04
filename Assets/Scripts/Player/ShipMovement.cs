@@ -32,6 +32,11 @@ public class ShipMovement : MonoBehaviour
 
     void Update()
     {
+        if (GameSettings.Instance.IsGameOver) 
+        {
+            return;        
+        }
+
         flashing.ToBlink(Time.deltaTime);
         horizontalRotate = Input.GetAxis("Horizontal");
         verticalMove = Input.GetAxis("Vertical");

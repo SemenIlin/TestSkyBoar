@@ -13,80 +13,42 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
+        progress = 0;
         rb = GetComponent<Rigidbody>();
+        rb.velocity = Vector3.zero;
     }
-    public void Short(Quaternion direction)
+    public void Short(Quaternion direction, Vector3 shootPoint)
     {
-        transform.localRotation = direction;
-        OnInit();
+        OnInit(shootPoint);
+        transform.localRotation = direction;        
+
+        rb.AddForce(transform.up * speed, ForceMode.Impulse);
     }
 
-    public void Short(Vector3 direction)
+    public void Short(Vector3 direction, Vector3 shootPoint)
     {
+        OnInit(shootPoint);
         transform.localEulerAngles = direction;
-        OnInit();
+
+        rb.AddForce(transform.up * speed, ForceMode.Impulse);
     }
 
-    void OnInit()
+    void OnInit(Vector3 shootPoint)
     {
+        transform.position = shootPoint;
         currentPosition = previousPosition = transform.position;
     }
 
     void FixedUpdate()
     {
-        rb.AddForce(transform.up * speed, ForceMode.Impulse);
-        ToLimitSpeed();
         DestroyBullet();
-    }
-    void ToLimitSpeed()
-    {
-        var newSpeed = rb.velocity;
-        var koeff = 0.0f;
-
-        if (Mathf.Abs(rb.velocity.x) >= Mathf.Abs(rb.velocity.y))
-        {
-            if (rb.velocity.y != 0.0f)
-            {
-                koeff = rb.velocity.x / rb.velocity.y;
-            }
-
-            newSpeed.x = Mathf.Clamp(newSpeed.x, -speed, speed);
-            if (koeff != 0)
-            {
-                newSpeed.y = newSpeed.x / koeff;
-            }
-            else
-            {
-                newSpeed.y = Mathf.Clamp(newSpeed.y, -speed, speed);
-            }
-        }
-
-        else
-        {
-            if (rb.velocity.x != 0.0f)
-            {
-                koeff = rb.velocity.y / rb.velocity.x;
-            }
-
-            newSpeed.y = Mathf.Clamp(newSpeed.y, -speed, speed);
-            if (koeff != 0)
-            {
-                newSpeed.x = newSpeed.y / koeff;
-            }
-            else
-            {
-                newSpeed.x = Mathf.Clamp(newSpeed.x, -speed, speed);
-            }
-        }
-
-        rb.velocity = newSpeed;
-    }        
+    }    
 
     float CalculateDistanceFlyBullet()
     {        
         currentPosition = transform.position;
         var step = Vector3.Distance(currentPosition, previousPosition);
-
+        Debug.Log(step);
         if (step < 0.8f) 
         { 
             progress += step;
@@ -101,7 +63,6 @@ public class Bullet : MonoBehaviour
         if (CalculateDistanceFlyBullet() >= Screen.WidthScreen)
         {
             gameObject.SetActive(false);
-            progress = 0;
         }
     }
 }

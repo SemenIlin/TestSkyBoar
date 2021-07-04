@@ -15,22 +15,14 @@ public class MenuScreen : MonoBehaviour
     bool isChange;
 
     public event Action GenerateAsteroidEvent;
-    public event Action ClearScreenEvent;
+    public event Action RestartGameEvent;
 
     private void Start()
     {
         GameSettings.Instance.SetControlType(ControlType.Keyboard);
         Time.timeScale = 0;
         ContinueButton.interactable = false;
-    }
-
-    private void Update()
-    {
-        if (!ContinueButton.interactable)
-        {
-            ShowScreen();
-        }
-    }
+    }   
 
     public GameScreen GameScreen => gameScreen;
     public Score Score => score;
@@ -52,7 +44,7 @@ public class MenuScreen : MonoBehaviour
     {
         score.ResetQuantityLife();
         score.ResetPoints();
-        ClearScreenEvent?.Invoke();
+        RestartGameEvent?.Invoke();
         GameSettings.Instance.SetIsGameOver(false);
         HideScreen();
         Time.timeScale = 1;

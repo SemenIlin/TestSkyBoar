@@ -23,10 +23,14 @@ public class GameLogic : MonoBehaviour
     void Start()
     {
         quantityAsteroids = startQuantityAsteroids;
+        hasObstacles = true;
 
         menuScreen.GenerateAsteroidEvent += OnInitAsteroids;
-        menuScreen.ClearScreenEvent += ClearScreen;
+        menuScreen.RestartGameEvent += ClearScreen;
+        menuScreen.RestartGameEvent += ShowPlayer;
+
         player = FindObjectOfType<ShipMovement>().transform;
+
         startPosition = player.position;
     }
 
@@ -49,6 +53,16 @@ public class GameLogic : MonoBehaviour
                 }
             }
         }
+
+        if (GameSettings.Instance.IsGameOver)
+        {
+            timer += Time.deltaTime;
+            if (timer > timeBetweenLoadLevel)
+            {
+                timer = 0;
+                menuScreen.Restart();
+            }
+        }
     }
 
 
@@ -58,42 +72,22 @@ public class GameLogic : MonoBehaviour
         if (menuScreen.Score.QuantityLifes == 0)
         {
             GameSettings.Instance.SetIsGameOver(true);
+            player.gameObject.SetActive(false);
             timer = 0;
-            menuScreen.Restart();
             ClearScreen();
         }
 
         menuScreen.GameScreen.UpdateQuantityLifeText(menuScreen.Score.QuantityLifes);
-    }
-
-    void ClearScreen()
-    {
-        asteroidPool.BigAsteroidsPool.SetAllDisactive();
-        asteroidPool.MiddleAsteroidsPool.SetAllDisactive();
-        asteroidPool.LittleAsteroidsPool.SetAllDisactive();
-
-        bulletPool.UFOBulletPool.SetAllDisactive();
-        bulletPool.PlayerBulletPool.SetAllDisactive();
-
-        ufoSpawner.ResetTimer();
-
-        var ufo = FindObjectOfType<UfoMovement>();
-        if(ufo != null)
-        {
-            Destroy(ufo.gameObject);
-        }
-
-        startQuantityAsteroids = quantityAsteroids;
-        player.position = startPosition;
-    }
+    }  
 
     public void LoadNextLevel(bool hasObstacles)
     {
         this.hasObstacles = hasObstacles;
-        //if (!hasObstacles)
-        //{
-        //    StartCoroutine(GetNextLevel());
-        //}
+    }
+
+    void ShowPlayer()
+    {
+        transform.gameObject.SetActive(true);
     }
 
     void OnInitAsteroids()
@@ -104,8 +98,6 @@ public class GameLogic : MonoBehaviour
             asteroid.transform.position = GeneratePosition(i);
         }
     }
-
-
     void GetNextLevel()
     {        
         ++startQuantityAsteroids;
@@ -139,5 +131,25 @@ public class GameLogic : MonoBehaviour
         }
 
         return newPosition;
+    }
+    void ClearScreen()
+    {
+        asteroidPool.BigAsteroidsPool.SetAllDisactive();
+        asteroidPool.MiddleAsteroidsPool.SetAllDisactive();
+        asteroidPool.LittleAsteroidsPool.SetAllDisactive();
+
+        bulletPool.UFOBulletPool.SetAllDisactive();
+        bulletPool.PlayerBulletPool.SetAllDisactive();
+
+        ufoSpawner.ResetTimer();
+
+        var ufo = FindObjectOfType<UfoMovement>();
+        if (ufo != null)
+        {
+            Destroy(ufo.gameObject);
+        }
+
+        startQuantityAsteroids = quantityAsteroids;
+        player.position = startPosition;
     }
 }

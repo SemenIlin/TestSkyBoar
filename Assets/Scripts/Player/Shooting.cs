@@ -15,6 +15,11 @@ public class Shooting : MonoBehaviour
    
     void Update()
     {
+        if (GameSettings.Instance.IsGameOver)
+        {
+            return;
+        }
+
         if (GameSettings.Instance.ControlType == ControlType.Keyboard)
         {
             ShootKeySpace();
@@ -70,12 +75,9 @@ public class Shooting : MonoBehaviour
     {
         ++currentQuantityShootBullet;
 
-        //bullet = Instantiate(bulletPrefab);
         bullet = bulletPool.PlayerBulletPool.GetFreeElement().gameObject;
-        bullet.transform.position = shootPoint.position;
-
         var bulletScript = bullet.GetComponent<Bullet>();
 
-        bulletScript.Short(transform.localRotation);
+        bulletScript.Short(transform.localRotation, shootPoint.position);
     }
 }

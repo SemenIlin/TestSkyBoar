@@ -32,7 +32,6 @@ public class UfoShooting : MonoBehaviour
     void Shoot()
     {
         var bullet = bulletPool.UFOBulletPool.GetFreeElement().gameObject;
-        bullet.transform.position = shootPoint.position;
         var target = FindObjectOfType<ShipMovement>();
         if (target == null)
         {
@@ -45,7 +44,7 @@ public class UfoShooting : MonoBehaviour
             angle = -angle;
         }
 
-        bullet.GetComponent<Bullet>().Short(new Vector3(0, 0, angle));
+        bullet.GetComponent<Bullet>().Short(new Vector3(0, 0, angle), shootPoint.position);
     }
 
     float GetPeriodBetweenShoot()
